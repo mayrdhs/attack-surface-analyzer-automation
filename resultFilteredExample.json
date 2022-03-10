@@ -1,0 +1,104 @@
+[
+   {
+      "Analysis": "WARNING",
+      "BaseRunId": "2022-03-10T09:35:41.2637138+01:00",
+      "ChangeType": "CREATED",
+      "Compare": {
+         "ResultType": "FILE",
+         "Characteristics": [
+            "IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA",
+            "IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE",
+            "IMAGE_DLLCHARACTERISTICS_NX_COMPAT",
+            "IMAGE_DLLCHARACTERISTICS_GUARD_CF",
+            "IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE"
+         ],
+         "Created": "2022-03-10T08:43:33.5351431Z",
+         "Group": "WINDEV2110EVAL\\None",
+         "Identity": "C:\\Vulnerable\\SearchIndexerVuln.exe",
+         "IsExecutable": true,
+         "LastModified": "2022-02-18T09:02:16.6606504Z",
+         "Owner": "BUILTIN\\Administrators",
+         "Path": "C:\\Vulnerable\\SearchIndexerVuln.exe",
+         "Permissions": {
+            "BUILTIN\\Administrators": "FullControl",
+            "NT AUTHORITY\\SYSTEM": "FullControl",
+            "BUILTIN\\Users": "ReadAndExecute, Synchronize",
+            "NT AUTHORITY\\Authenticated Users": "Modify, Synchronize"
+         },
+         "SignatureStatus": {},
+         "Size": 921600
+      },
+      "CompareRunId": "2022-03-10T09:43:34.2604275+01:00",
+      "Identity": "C:\\Vulnerable\\SearchIndexerVuln.exe",
+      "ResultType": "FILE",
+      "Rules": [
+         {
+            "ChangeTypes": [
+               "CREATED",
+               "MODIFIED"
+            ],
+            "Flag": "WARNING",
+            "Platforms": [
+               "LINUX",
+               "MACOS",
+               "WINDOWS"
+            ],
+            "ResultType": "FILE",
+            "Description": "Flag when unsigned/incorrectly signed binaries are added.",
+            "Name": "Unsigned binaries"
+         }
+      ]
+   },
+   {
+      "Analysis": "WARNING",
+      "BaseRunId": "2022-03-10T09:35:41.2637138+01:00",
+      "ChangeType": "CREATED",
+      "Compare": {
+         "ResultType": "SERVICE",
+         "AcceptPause": false,
+         "AcceptStop": false,
+         "Caption": "SearchIndexerVuln",
+         "CheckPoint": 0,
+         "CreationClassName": "Win32_Service",
+         "DelayedAutoStart": false,
+         "DesktopInteract": false,
+         "DisplayName": "SearchIndexerVuln",
+         "ErrorControl": "Normal",
+         "ExitCode": 1077,
+         "Identity": "SearchIndexerVuln",
+         "Name": "SearchIndexerVuln",
+         "PathName": "C:\\Vulnerable\\SearchIndexerVuln.exe",
+         "ProcessId": 0,
+         "ServiceSpecificExitCode": 0,
+         "ServiceType": "Own Process",
+         "Started": false,
+         "StartMode": "Auto",
+         "StartName": "LocalSystem",
+         "State": "Stopped",
+         "Status": "OK",
+         "SystemCreationClassName": "Win32_ComputerSystem",
+         "SystemName": "WINDEV2110EVAL",
+         "TagId": 0,
+         "WaitHint": 0
+      },
+      "CompareRunId": "2022-03-10T09:43:34.2604275+01:00",
+      "Identity": "SearchIndexerVuln",
+      "ResultType": "SERVICE",
+      "Rules": [
+         {
+            "ChangeTypes": [
+               "CREATED"
+            ],
+            "Flag": "WARNING",
+            "Platforms": [
+               "LINUX",
+               "MACOS",
+               "WINDOWS"
+            ],
+            "ResultType": "SERVICE",
+            "Description": "Flag when a new service is created.",
+            "Name": "New service"
+         }
+      ]
+   }
+]
