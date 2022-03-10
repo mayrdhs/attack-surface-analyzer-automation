@@ -1,0 +1,48 @@
+{
+  "Rules": [
+	{
+      "Name": "New service",
+      "Description": "Flag when a new service is created.",
+      "Flag": "WARNING",
+      "ChangeTypes": ["CREATED"],
+      "ResultType": "SERVICE"
+    },
+    {
+      "Name": "Unsigned binaries",
+      "Description": "Flag when unsigned/incorrectly signed binaries are added.",
+      "Flag": "WARNING",
+      "ChangeTypes": ["CREATED", "MODIFIED"],
+      "ResultType": "FILE",
+      "Expression": "is_exe AND NOT valid_windows_signature",
+      "Clauses": [
+        {
+          "Label": "is_exe",
+          "Field": "IsExecutable",
+          "Operation": "IsTrue"
+        },
+        {
+          "Label": "valid_windows_signature",
+          "Field": "SignatureStatus.IsAuthenticodeValid",
+          "Operation": "IsTrue"
+        }
+      ]
+    }
+  ],
+  "DefaultLevels": {
+    "PORT": "NONE",
+    "FILE": "INFORMATION",
+    "SERVICE": "INFORMATION",
+    "CERTIFICATE": "NONE",
+    "USER": "NONE",
+    "REGISTRY": "NONE",
+    "FIREWALL": "NONE",
+    "COM": "NONE",
+    "LOG": "NONE",
+    "TPM": "NONE",
+    "KEY": "NONE",
+    "PROCESS": "NONE",
+    "DRIVER": "NONE",
+    "WIFI": "NONE",
+    "FILEMONITOR": "NONE"
+  }
+}
