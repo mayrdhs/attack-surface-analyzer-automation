@@ -36,3 +36,22 @@ If everything is set up you are ready to run *Script1.ps1* with administrator pe
 
 ## Using custom rules for analysis
 You can find a guide on how to handle custom analysis rules in the [wiki](https://github.com/microsoft/AttackSurfaceAnalyzer/wiki/Authoring-Analysis-Rules) of ASA. Then you need to set the parameter `--filename` to point to your custom rules file e.g. `.\asa export-collect --filename Path\to\customRules.json`.
+
+## What other scripts are included?
+- *CheckAndInstallChocoAndPython.ps1*: Checks for Chocolatey and Python. Installs the latest version if not already installed.
+- *CleanupService.ps1*: Deletes everything created by *CreateService.ps1*.
+- *CreateService.ps1*: Creates a potentially vulnerable service.
+- *DownloadLatestASAwithConf.ps1*: This script uses *asaL.conf* and the [GitHub API](https://api.github.com/repos/microsoft/AttackSurfaceAnalyzer/releases/latest) to download the latest ASA version.
+- *DownloadLatestASAwithoutConf.ps1*: This script downloads the latest ASA version via the GitHub API but without a config file.
+- *DownloadSpecificASAversion.ps1*: Downloads the in *asaV.conf* specified version of ASA.
+- *filterExport.py*: Python filter script to filter out unnecessary output in the export file.
+- *RegisterTask.ps1*: Sets a scheduled task to perform after a reboot as configured in *Script1.ps1*.
+- *UnregisterTask.ps1*: This deletes the scheduled task registered in *RegisterTask.ps1*.
+
+## What tests are included?
+These tests could be run beform running the main scripts to ensure everything works as intended.
+- *TestAdmin.ps1*: This script checks whether the executing user has administrative rights and if not tries to run the script as admin. It prints a success or a warning message to the CLI.
+- *TestASA.ps1*: This can be used to test ASA in the corresponding ASA directory without the need to download and install it every run.
+- *TestConnection.ps1*: Tries to reach GitHub and prints a success or a warning message.
+- *TestFilesAndFolders.ps1*: Tests whether the required files and folders are available.
+- *TestIfVersionAlreadyInstalled.ps1*: Tests whether a specified ASA version is already installed in the working directory.
