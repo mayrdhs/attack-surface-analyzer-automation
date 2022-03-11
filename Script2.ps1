@@ -101,11 +101,11 @@ if (Test-Path "$folderPath\result.json" -pathType leaf) {Write-Warning "Result f
 if (Test-Path "$workingDirectory\filteredResult.json" -pathType leaf) {Write-Warning "Filtered result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
 Get-Childitem -Path "$folderPath\*.json.txt" | Rename-Item -NewName "result.json"
 
-# Check for python filter script and copy it into ASA folder
+# Check for Python filter script and copy it into ASA folder
 if (-NOT(Test-Path $pythonFilterScript -pathType leaf)) {Write-Warning "Python filter script not found. Please make sure the file exists and set the correct path!";Return}
 Copy-Item "$workingDirectory\filterExport.py" $folderPath
 
-# Filter json result file
+# Filter json result file using Python
 python filterExport.py
 
 # Move filtered result to working directory
