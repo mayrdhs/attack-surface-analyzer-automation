@@ -1,9 +1,10 @@
 $workingDirectory="$env:USERPROFILE\Downloads"
+$confPath="$workingDirectory\asa.conf"
 $rulesetPath="$workingDirectory\customRules.json"
 $pythonFilterScript="$workingDirectory\filterExport.py"
 
 # Create variables from config
-Foreach ($i in $(Get-Content $env:USERPROFILE\Downloads\asa.conf)){
+Foreach ($i in $(Get-Content $confPath)){
     Set-Variable -Name $i.split("=")[0] -Value $i.split("=")[1]
 }
 
