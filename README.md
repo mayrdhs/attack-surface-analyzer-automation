@@ -15,18 +15,21 @@ Then you may also need to change the parameters in the config file (*asa.conf* o
 - `version`: This ASA version gets downloaded if downloadLatestASA isn't set to "true".
 - `setTimeAndLanguage`: This sets the specified time and language if set to "true".
 - `timezone`: This specifies the timezone to be set if the above parameter is true. You can get a list of available timezones by running `Get-TimeZone – ListAvailable`.
-- `language`: This is the language pack including the keyboard layout the system should use. The language pack gets installed if *setTimeAndLanguage* is true and if it's not already installed on the system. To see the language change you need to sign out and then sign in again or perform a reboot (see the *reboot* parameter).
+- `language`: This is the language pack including the keyboard layout the system should use. The language pack gets installed if *setTimeAndLanguage* is true and if it's not already installed on the system. To see the language change you need to sign out and then sign in again or perform a reboot (see the *reboot* parameter). The keyboard layout will be changed immediately.
 - `installChocoAndPython`: With this boolean parameter you can set whether to install the latest versions of the package manager Chocolatey and Python 3. The installation will be skipped if `choco` and/or `python` can already be used within the shell.
 - `reboot`: This specifies whether to reboot after the first script because of language and/or software changes. Script2.ps1 will continue automatically after the reboot. It will only reboot if Chocolatey and/or Python got installed.
 - `setExecutionPolicy`: This sets the execution policy to "Default" after running the scripts.  
+
+These "boolean" parameters are just pseudo-implemented so if you set a parameter to anything other than "true" it is considered to be "false" later in the if clause.
 
 ## Parameters to modify
 Apart from the *config file* there are also some parameters in the headers of the scripts since they cannot be put inside of the config. These are:
 - `workingDirectory`: The most important directory. Here should be all relevant files to be able to run the scripts.
 - `confPath`: Path to *config file*.
 - `script2Path`: Path to *Script2.ps1*
-- `rulesetPath`: Path to custom ruleset.
-- `pythonFilterScript`: Path to the Python filter script.
+- `rulesetPath`: Path to custom ruleset (*customRules.json* in this case).
+- `pythonFilterScript`: Path to the Python filter script (*filterExport.py*). The standard ASA json export consists of dictionaries and lists, so you need to be aware of that when you modify this script.
+- `ASA parameters`: You can modify the ASA parameters in *Script2.ps1* to perform other actions. All available commands can be seen by running `.\asa.exe --help`. Then you can get more information about a command by running `.\asa.exe --help command` e.g. `.\asa.exe --help collect`.
 
 ## Using custom rules for analysis
 You can find a guide on how to handle custom analysis rules in the [wiki](https://github.com/microsoft/AttackSurfaceAnalyzer/wiki/Authoring-Analysis-Rules) of ASA. Then you need to set the parameter `--filename` to point to your custom rules file e.g. `.\asa export-collect --filename Path\to\customRules.json`.
