@@ -25,11 +25,11 @@ These "boolean" parameters are pseudo-implemented so if you set a parameter to a
 
 ## Parameters to eventually modify
 Apart from the *config file* there are also some parameters in the headers of the scripts since they cannot be put inside of the config. These are:
-- `workingDirectory`: The most important directory. Here should be all relevant files to be able to run the scripts.
-- `confPath`: Path to *config file*.
-- `script2Path`: Path to *Script2.ps1*
-- `rulesetPath`: Path to custom ruleset (*customRules.json* in this case).
-- `pythonFilterScript`: Path to the Python filter script (*filterExport.py*). The standard ASA json export consists of dictionaries and lists, so you need to be aware of that when you modify this script.
+- `$workingDirectory`: The most important directory. Here should be all relevant files to be able to run the scripts.
+- `$confPath`: Path to *config file*.
+- `$script2Path`: Path to *Script2.ps1*
+- `$rulesetPath`: Path to custom ruleset (*customRules.json* in this case).
+- `$pythonFilterScript`: Path to the Python filter script (*filterExport.py*). The standard ASA json export consists of dictionaries and lists, so you need to be aware of that when you modify this script.
 - `ASA parameters`: You can modify the ASA parameters in *Script2.ps1* to perform other actions. All available commands can be seen by running `.\asa.exe --help`. Then you can get more information about a command by running `.\asa.exe --help command` e.g. `.\asa.exe --help collect`.  
 
 If everything is set up you are ready to run *Script1.ps1* with administrator permissions by calling `.\Script1.ps1` via PowerShell.
