@@ -102,7 +102,7 @@ Get-Childitem -Path "$asaFolderName\*.json.txt" | Rename-Item -NewName "result.j
 
 # Check for Python filter script and copy it into ASA folder
 if (-NOT(Test-Path $pythonFilterScript -pathType leaf)) {Write-Warning "Python filter script not found. Please make sure the file exists and set the correct path!";Return}
-Copy-Item "$workingDirectory\filterExport.py" $asaFolderName
+Copy-Item $pythonFilterScript $asaFolderName
 
 # Filter json result file using Python
 python filterExport.py
