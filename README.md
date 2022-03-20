@@ -21,7 +21,7 @@ Then you may also need to change the parameters in the config file (*asa.conf* o
 - `reboot`: This specifies whether to reboot after the first script because of language and/or software changes. Script2.ps1 will continue automatically after the reboot. It will only reboot if Chocolatey and/or Python got installed.
 - `setExecutionPolicy`: This sets the execution policy to "Default" after running the scripts.  
 
-These "boolean" parameters are just pseudo-implemented so if you set a parameter to anything other than "true" it is considered to be "false" later in the if clause.
+These "boolean" parameters are just pseudo-implemented so if you set a parameter to anything other than "true" it is considered to be "false" later in the if clauses.
 
 ## Parameters to eventually modify
 Apart from the *config file* there are also some parameters in the headers of the scripts since they cannot be put inside of the config. These are:
