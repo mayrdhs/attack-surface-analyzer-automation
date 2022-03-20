@@ -20,10 +20,10 @@ else {
 
 # Set path for zip and ASA folder name
 $zipPath = Join-Path -Path $extractPath -ChildPath (Split-Path -Path $downloadUri -Leaf)
-$asaFolderName = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
+$asaFolderPath = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
 
 # Check if version is already installed
-if (Test-Path $asaFolderName -pathType container) {Write-Warning "This version is already installed! Quitting the setup...";Return}
+if (Test-Path $asaFolderPath -pathType container) {Write-Warning "This version is already installed! Quitting the setup...";Return}
 
 # Download ASA
 Write-Output "Downloading Microsoft Attack Surface Analyzer $asaName..."
@@ -40,8 +40,8 @@ try {
 		   $asaName = (Invoke-RestMethod -Method GET -Uri https://api.github.com/repos/$repo/releases/latest).name
 		   $downloadUri = ((Invoke-RestMethod -Method GET -Uri https://api.github.com/repos/$repo/releases/latest).assets | Where-Object name -like $filenamePattern).browser_download_url
 		   $zipPath = Join-Path -Path $extractPath -ChildPath (Split-Path -Path $downloadUri -Leaf)
-		   $asaFolderName = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
-		   if (Test-Path $asaFolderName -pathType container) {
+		   $asaFolderPath = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
+		   if (Test-Path $asaFolderPath -pathType container) {
 			   Write-Warning "The latest Microsoft ASA version ($asaName) is already installed! Quitting the setup..."
 			   Return
 		   }
@@ -62,8 +62,8 @@ Remove-Item $zipPath -Force
 Write-Output "Microsoft Attack Surface Analyzer $asaName was successfully installed!"
 
 # Add Windows Defender rule
-$asaPath = Join-Path -Path $asaFolderName -ChildPath asa.exe
-Add-MpPreference -ExclusionProcess $asaPath
+$asaExePath = Join-Path -Path $asaFolderPath -ChildPath asa.exe
+Add-MpPreference -ExclusionProcess $asaExePath
 
 # Set execution policy
 if ($setExecutionPolicy -eq "true") {Set-ExecutionPolicy Default}
@@ -73,7 +73,7 @@ $scheduledTask = Get-ScheduledTask -TaskName "ASATask" -ErrorAction SilentlyCont
 if ($scheduledTask) {Unregister-ScheduledTask -TaskName "ASATask" -Confirm:$false}
 
 # Change directory and run first scan
-cd $asaFolderName
+cd $asaFolderPath
 Write-Output "Running first scan..."
 .\asa.exe collect -fs
 
@@ -96,18 +96,18 @@ Write-Output "Collecting results..."
 .\asa export-collect --filename $rulesetPath
 
 # Check if result file already exists and rename export if not
-if (Test-Path "$asaFolderName\result.json" -pathType leaf) {Write-Warning "Result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
+if (Test-Path "$asaFolderPath\result.json" -pathType leaf) {Write-Warning "Result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
 if (Test-Path "$workingDirectory\filteredResult.json" -pathType leaf) {Write-Warning "Filtered result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
-Get-Childitem -Path "$asaFolderName\*.json.txt" | Rename-Item -NewName "result.json"
+Get-Childitem -Path "$asaFolderPath\*.json.txt" | Rename-Item -NewName "result.json"
 
 # Check for Python filter script and copy it into ASA folder
 if (-NOT(Test-Path $pythonFilterScript -pathType leaf)) {Write-Warning "Python filter script not found. Please make sure the file exists and set the correct path!";Return}
-Copy-Item $pythonFilterScript $asaFolderName
+Copy-Item $pythonFilterScript $asaFolderPath
 
 # Filter json result file using Python
 python filterExport.py
 
 # Move filtered result to working directory
-Move-Item "$asaFolderName\resultFiltered.json" $workingDirectory
+Move-Item "$asaFolderPath\resultFiltered.json" $workingDirectory
 
 Write-Output "Everything done! The filtered json result file is at $workingDirectory\resultFiltered.json"
