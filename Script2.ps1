@@ -62,8 +62,7 @@ Remove-Item $zipPath -Force
 Write-Output "Microsoft Attack Surface Analyzer $asaName was successfully installed!"
 
 # Add Windows Defender rule
-$folderPath =  $zipPath.Substring(0, $zipPath.LastIndexOf('.'))
-$asaPath = Join-Path -Path $folderPath -ChildPath asa.exe
+$asaPath = Join-Path -Path $asaFolderName -ChildPath asa.exe
 Add-MpPreference -ExclusionProcess $asaPath
 
 # Set execution policy
@@ -74,7 +73,7 @@ $scheduledTask = Get-ScheduledTask -TaskName "ASATask" -ErrorAction SilentlyCont
 if ($scheduledTask) {Unregister-ScheduledTask -TaskName "ASATask" -Confirm:$false}
 
 # Change directory and run first scan
-cd $folderPath
+cd $asaFolderName
 Write-Output "Running first scan..."
 .\asa.exe collect -fs
 
@@ -97,18 +96,18 @@ Write-Output "Collecting results..."
 .\asa export-collect --filename $rulesetPath
 
 # Check if result file already exists and rename export if not
-if (Test-Path "$folderPath\result.json" -pathType leaf) {Write-Warning "Result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
+if (Test-Path "$asaFolderName\result.json" -pathType leaf) {Write-Warning "Result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
 if (Test-Path "$workingDirectory\filteredResult.json" -pathType leaf) {Write-Warning "Filtered result file already exists. Please make sure to rename or remove it and the run the script again.";Return}
-Get-Childitem -Path "$folderPath\*.json.txt" | Rename-Item -NewName "result.json"
+Get-Childitem -Path "$asaFolderName\*.json.txt" | Rename-Item -NewName "result.json"
 
 # Check for Python filter script and copy it into ASA folder
 if (-NOT(Test-Path $pythonFilterScript -pathType leaf)) {Write-Warning "Python filter script not found. Please make sure the file exists and set the correct path!";Return}
-Copy-Item "$workingDirectory\filterExport.py" $folderPath
+Copy-Item "$workingDirectory\filterExport.py" $asaFolderName
 
 # Filter json result file using Python
 python filterExport.py
 
 # Move filtered result to working directory
-Move-Item "$folderPath\resultFiltered.json" $workingDirectory
+Move-Item "$asaFolderName\resultFiltered.json" $workingDirectory
 
 Write-Output "Everything done! The filtered json result file is at $workingDirectory\resultFiltered.json"
