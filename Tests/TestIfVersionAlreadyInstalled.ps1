@@ -19,9 +19,9 @@ else {
 
 # Set path for zip and ASA folder name
 $zipPath = Join-Path -Path $extractPath -ChildPath (Split-Path -Path $downloadUri -Leaf)
-$asaFolderName = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
+$asaFolderPath = Join-Path -Path $extractPath -ChildPath ("ASA_win_$asaName".replace('v',''))
 
 # Check if version is already installed
-if (Test-Path $asaFolderName -pathType container) {Write-Warning "This version is already installed! Quitting the setup...";Return}
+if (Test-Path $asaFolderPath -pathType container) {Write-Warning "This version is already installed! Quitting the setup...";Return}
 
 Write-Output "This version is not installed yet."
