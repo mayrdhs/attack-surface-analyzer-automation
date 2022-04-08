@@ -1,5 +1,5 @@
-# Microsoft Attack Surface Analyzer 2.0 Automation
-This repository provides scripts to automate [Microsoft Attack Surface Analyzer 2.0](https://github.com/microsoft/AttackSurfaceAnalyzer) (ASA). Please feel free to use and modify these scripts in any form you want.  
+# Microsoft Attack Surface Analyzer 2 Automation
+This repository provides scripts to automate [Microsoft Attack Surface Analyzer 2](https://github.com/microsoft/AttackSurfaceAnalyzer) (ASA). Please feel free to use and modify these scripts in any form you want.  
 *Script1.ps1*, *Script2.ps1*, *asa.conf* and *filterExport.py* represent the main function of this project. By running *Script1.ps1* (and automatically *Script2.ps1*) on a newly set up system, you can modify the system's settings, install additional software, install a specific or the latest ASA version and perform ASA functionality all in one pass.  
 The JSON file *resultFilteredExample.json* is an example for a possible output after running the scripts as they are configured right now.  
 The folder "Other scripts" includes scripts for parts of the main functionality.  
